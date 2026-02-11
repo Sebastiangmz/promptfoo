@@ -410,6 +410,8 @@ export interface EvaluateStats {
   errors: number;
   tokenUsage: Required<TokenUsage>;
   durationMs?: number;
+  expectedTestCount?: number;
+  status?: 'running' | 'complete';
 }
 
 export interface EvaluateSummaryV3 {

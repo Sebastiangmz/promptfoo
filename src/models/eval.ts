@@ -331,6 +331,8 @@ export default class Eval {
   runtimeOptions?: Partial<import('../types').EvaluateOptions>;
   _shared: boolean = false;
   durationMs?: number;
+  expectedTestCount?: number;
+  evalStatus?: 'running' | 'complete';
 
   /**
    * The shareable URL for this evaluation, if it has been shared.
@@ -376,15 +378,31 @@ export default class Eval {
     const eval_ = evalData[0];
     const datasetId = datasetResults[0]?.datasetId;
 
-    // Extract durationMs from results column (for V4 evals)
-    // Validate that it's a finite positive number to guard against corrupted data
+    // Extract metadata from results column (for V4 evals)
     const resultsObj = eval_.results as Record<string, unknown> | undefined;
+
+    // Validate durationMs is a finite positive number to guard against corrupted data
     const rawDurationMs =
       resultsObj && 'durationMs' in resultsObj ? resultsObj.durationMs : undefined;
     const durationMs =
       typeof rawDurationMs === 'number' && Number.isFinite(rawDurationMs) && rawDurationMs >= 0
         ? rawDurationMs
         : undefined;
+
+    // Extract expectedTestCount
+    const rawExpectedTestCount =
+      resultsObj && 'expectedTestCount' in resultsObj ? resultsObj.expectedTestCount : undefined;
+    const expectedTestCount =
+      typeof rawExpectedTestCount === 'number' &&
+      Number.isFinite(rawExpectedTestCount) &&
+      rawExpectedTestCount >= 0
+        ? rawExpectedTestCount
+        : undefined;
+
+    // Extract eval status
+    const rawEvalStatus = resultsObj && 'status' in resultsObj ? resultsObj.status : undefined;
+    const evalStatus =
+      rawEvalStatus === 'running' || rawEvalStatus === 'complete' ? rawEvalStatus : undefined;
 
     const evalInstance = new Eval(eval_.config, {
       id: eval_.id,
@@ -397,6 +415,8 @@ export default class Eval {
       vars: eval_.vars || [],
       runtimeOptions: eval_.runtimeOptions ?? undefined,
       durationMs,
+      expectedTestCount,
+      evalStatus,
     });
     if (eval_.results && 'table' in eval_.results) {
       evalInstance.oldResults = eval_.results as EvaluateSummaryV2;
@@ -605,6 +625,8 @@ export default class Eval {
       vars?: string[];
       runtimeOptions?: Partial<import('../types').EvaluateOptions>;
       durationMs?: number;
+      expectedTestCount?: number;
+      evalStatus?: 'running' | 'complete';
     },
   ) {
     const createdAt = opts?.createdAt || new Date();
@@ -620,6 +642,8 @@ export default class Eval {
     this.vars = opts?.vars || [];
     this.runtimeOptions = opts?.runtimeOptions;
     this.durationMs = opts?.durationMs;
+    this.expectedTestCount = opts?.expectedTestCount;
+    this.evalStatus = opts?.evalStatus;
   }
 
   version() {
@@ -655,9 +679,21 @@ export default class Eval {
     if (this.useOldResults()) {
       invariant(this.oldResults, 'Old results not found');
       updateObj.results = this.oldResults;
-    } else if (this.durationMs !== undefined) {
-      // For V4 evals, store durationMs in the results column
-      updateObj.results = { durationMs: this.durationMs };
+    } else {
+      // For V4 evals, store metadata in the results column
+      const resultsMetadata: Record<string, unknown> = {};
+      if (this.durationMs !== undefined) {
+        resultsMetadata.durationMs = this.durationMs;
+      }
+      if (this.expectedTestCount !== undefined) {
+        resultsMetadata.expectedTestCount = this.expectedTestCount;
+      }
+      if (this.evalStatus !== undefined) {
+        resultsMetadata.status = this.evalStatus;
+      }
+      if (Object.keys(resultsMetadata).length > 0) {
+        updateObj.results = resultsMetadata;
+      }
     }
     db.update(evalsTable).set(updateObj).where(eq(evalsTable.id, this.id)).run();
     this.persisted = true;
@@ -673,6 +709,14 @@ export default class Eval {
 
   setDurationMs(durationMs: number) {
     this.durationMs = durationMs;
+  }
+
+  setExpectedTestCount(count: number) {
+    this.expectedTestCount = count;
+  }
+
+  setEvalStatus(status: 'running' | 'complete') {
+    this.evalStatus = status;
   }
 
   getPrompts() {
@@ -1169,6 +1213,8 @@ export default class Eval {
       errors: 0,
       tokenUsage: createEmptyTokenUsage(),
       durationMs: this.durationMs,
+      expectedTestCount: this.expectedTestCount,
+      status: this.evalStatus,
     };
 
     for (const prompt of this.prompts) {
