@@ -1548,6 +1548,10 @@ export async function getEvalSummaries(
       isRedteam: sql<boolean>`json_type(${evalsTable.config}, '$.redteam') IS NOT NULL`,
       prompts: evalsTable.prompts,
       config: evalsTable.config,
+      expectedTestCount: sql<
+        number | null
+      >`json_extract(${evalsTable.results}, '$.expectedTestCount')`,
+      evalStatus: sql<string | null>`json_extract(${evalsTable.results}, '$.status')`,
     })
     .from(evalsTable)
     .leftJoin(evalsToDatasetsTable, eq(evalsTable.id, evalsToDatasetsTable.evalId))
@@ -1643,6 +1647,8 @@ export async function getEvalSummaries(
       providers: deserializedProviders,
       attackSuccessRate:
         type === 'redteam' ? calculateAttackSuccessRate(testRunCount, failCount) : undefined,
+      expectedTestCount: result.expectedTestCount ?? undefined,
+      evalStatus: (result.evalStatus as 'running' | 'complete') ?? undefined,
     };
   });
 }
