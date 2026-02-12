@@ -6,20 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [0.120.25](https://github.com/promptfoo/promptfoo/compare/0.120.24...0.120.25) (2026-02-12)
 
-
 ### Bug Fixes
 
-* **deps:** update dependency @anthropic-ai/sdk to ^0.73.0 ([#7604](https://github.com/promptfoo/promptfoo/issues/7604)) ([2b7abc7](https://github.com/promptfoo/promptfoo/commit/2b7abc7c2a2e2833d0d25ef9675f5f9bb5883177))
-* **deps:** update dependency @openai/agents to ^0.4.6 ([#7635](https://github.com/promptfoo/promptfoo/issues/7635)) ([d476c6a](https://github.com/promptfoo/promptfoo/commit/d476c6a5d29fd1eb8d103bdde351735a6090bf37))
-* **deps:** update dependency @opencode-ai/sdk to ^1.1.52 ([#7601](https://github.com/promptfoo/promptfoo/issues/7601)) ([b6aa8e4](https://github.com/promptfoo/promptfoo/commit/b6aa8e4acbad19f0e806e5e4ecf44c278e5b78e2))
-* **deps:** update dependency @opencode-ai/sdk to ^1.1.53 ([#7614](https://github.com/promptfoo/promptfoo/issues/7614)) ([9aec3d2](https://github.com/promptfoo/promptfoo/commit/9aec3d245de81a6740645a69e3dbb21dbb50e4bb))
-* **deps:** update dependency dotenv to ^17.2.4 ([#7607](https://github.com/promptfoo/promptfoo/issues/7607)) ([a44d36d](https://github.com/promptfoo/promptfoo/commit/a44d36dbd73c89d3d3161b5a1387464f68ebcc74))
-* **deps:** update dependency openai to ^6.18.0 ([#7598](https://github.com/promptfoo/promptfoo/issues/7598)) ([7a83c00](https://github.com/promptfoo/promptfoo/commit/7a83c000e53854e81eacaeddda012b58568564fb))
-* **deps:** update dependency ora to ^9.3.0 ([#7594](https://github.com/promptfoo/promptfoo/issues/7594)) ([9125e12](https://github.com/promptfoo/promptfoo/commit/9125e125c9f20942e542c02bf061b43ee8b63840))
-* **deps:** update dependency undici to ^7.21.0 ([#7625](https://github.com/promptfoo/promptfoo/issues/7625)) ([1703a20](https://github.com/promptfoo/promptfoo/commit/1703a20e253e38fb19eaa35208e6014628e6b080))
-* **providers:** avoid codex sdk cached token double-counting ([#7617](https://github.com/promptfoo/promptfoo/issues/7617)) ([c4059b8](https://github.com/promptfoo/promptfoo/commit/c4059b877a180a1df52b5b768b1fc1a638aa4956))
-* **redteam:** fix severity card counts for custom policy vulnerabilities ([#7615](https://github.com/promptfoo/promptfoo/issues/7615)) ([4747f2a](https://github.com/promptfoo/promptfoo/commit/4747f2afa755b8453ba8c314eddb784378986261))
-* **table:** display sessionIds array from multi-turn strategies ([#7608](https://github.com/promptfoo/promptfoo/issues/7608)) ([0442aee](https://github.com/promptfoo/promptfoo/commit/0442aee2b479f7a843f286d6bdf509759234a4b2))
+- **deps:** update dependency @anthropic-ai/sdk to ^0.73.0 ([#7604](https://github.com/promptfoo/promptfoo/issues/7604)) ([2b7abc7](https://github.com/promptfoo/promptfoo/commit/2b7abc7c2a2e2833d0d25ef9675f5f9bb5883177))
+- **deps:** update dependency @openai/agents to ^0.4.6 ([#7635](https://github.com/promptfoo/promptfoo/issues/7635)) ([d476c6a](https://github.com/promptfoo/promptfoo/commit/d476c6a5d29fd1eb8d103bdde351735a6090bf37))
+- **deps:** update dependency @opencode-ai/sdk to ^1.1.52 ([#7601](https://github.com/promptfoo/promptfoo/issues/7601)) ([b6aa8e4](https://github.com/promptfoo/promptfoo/commit/b6aa8e4acbad19f0e806e5e4ecf44c278e5b78e2))
+- **deps:** update dependency @opencode-ai/sdk to ^1.1.53 ([#7614](https://github.com/promptfoo/promptfoo/issues/7614)) ([9aec3d2](https://github.com/promptfoo/promptfoo/commit/9aec3d245de81a6740645a69e3dbb21dbb50e4bb))
+- **deps:** update dependency dotenv to ^17.2.4 ([#7607](https://github.com/promptfoo/promptfoo/issues/7607)) ([a44d36d](https://github.com/promptfoo/promptfoo/commit/a44d36dbd73c89d3d3161b5a1387464f68ebcc74))
+- **deps:** update dependency openai to ^6.18.0 ([#7598](https://github.com/promptfoo/promptfoo/issues/7598)) ([7a83c00](https://github.com/promptfoo/promptfoo/commit/7a83c000e53854e81eacaeddda012b58568564fb))
+- **deps:** update dependency ora to ^9.3.0 ([#7594](https://github.com/promptfoo/promptfoo/issues/7594)) ([9125e12](https://github.com/promptfoo/promptfoo/commit/9125e125c9f20942e542c02bf061b43ee8b63840))
+- **deps:** update dependency undici to ^7.21.0 ([#7625](https://github.com/promptfoo/promptfoo/issues/7625)) ([1703a20](https://github.com/promptfoo/promptfoo/commit/1703a20e253e38fb19eaa35208e6014628e6b080))
+- **providers:** avoid codex sdk cached token double-counting ([#7617](https://github.com/promptfoo/promptfoo/issues/7617)) ([c4059b8](https://github.com/promptfoo/promptfoo/commit/c4059b877a180a1df52b5b768b1fc1a638aa4956))
+- **redteam:** fix severity card counts for custom policy vulnerabilities ([#7615](https://github.com/promptfoo/promptfoo/issues/7615)) ([4747f2a](https://github.com/promptfoo/promptfoo/commit/4747f2afa755b8453ba8c314eddb784378986261))
+- **table:** display sessionIds array from multi-turn strategies ([#7608](https://github.com/promptfoo/promptfoo/issues/7608)) ([0442aee](https://github.com/promptfoo/promptfoo/commit/0442aee2b479f7a843f286d6bdf509759234a4b2))
 
 ## [0.120.24](https://github.com/promptfoo/promptfoo/compare/0.120.23...0.120.24) (2026-02-10)
 
